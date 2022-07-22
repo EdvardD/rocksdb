@@ -15,6 +15,7 @@
 #include <map>
 #include <unordered_set>
 #include <vector>
+#include <iostream>
 
 #include "port/port.h"
 #include "rocksdb/cache.h"
@@ -2226,6 +2227,11 @@ rocksdb_block_based_options_create() {
 void rocksdb_block_based_options_destroy(
     rocksdb_block_based_table_options_t* options) {
   delete options;
+}
+
+void rocksdb_block_based_options_set_checksum(
+    rocksdb_block_based_table_options_t* opt, char v) {
+  opt->rep.checksum = static_cast<ROCKSDB_NAMESPACE::ChecksumType>(v);
 }
 
 void rocksdb_block_based_options_set_block_size(
