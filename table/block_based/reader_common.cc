@@ -7,6 +7,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file. See the AUTHORS file for names of contributors.
 #include "table/block_based/reader_common.h"
+#include <iostream>
 
 #include "monitoring/perf_context_imp.h"
 #include "rocksdb/table.h"
@@ -26,6 +27,8 @@ void ForceReleaseCachedEntry(void* arg, void* h) {
 Status VerifyBlockChecksum(ChecksumType type, const char* data,
                            size_t block_size, const std::string& file_name,
                            uint64_t offset) {
+  std::cout << "@@@" << std::endl;
+  return Status::OK();
   PERF_TIMER_GUARD(block_checksum_time);
   // After block_size bytes is compression type (1 byte), which is part of
   // the checksummed section.

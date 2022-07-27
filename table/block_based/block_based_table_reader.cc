@@ -572,6 +572,7 @@ Status BlockBasedTable::Open(
   ReadOptions ro;
   ro.deadline = read_options.deadline;
   ro.io_timeout = read_options.io_timeout;
+  ro.verify_checksums = false;
 
   // prefetch both index and filters, down to all partitions
   const bool prefetch_all = prefetch_index_and_filter_in_cache || level == 0;
@@ -2911,6 +2912,9 @@ Status BlockBasedTable::Prefetch(const Slice* const begin,
 
 Status BlockBasedTable::VerifyChecksum(const ReadOptions& read_options,
                                        TableReaderCaller caller) {
+  if (!read_options.verify_checksums) {
+    return Status::OK();
+  }
   Status s;
   // Check Meta blocks
   std::unique_ptr<Block> metaindex;
